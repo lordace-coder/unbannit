@@ -1,0 +1,87 @@
+{% extends 'src/generic_page_block.html' %}
+{% load static %} 
+{% block title%}Blog Posts {% endblock title %}
+
+
+
+{% block body%}
+
+<!-- NavBar-->
+{% include 'src/nav.html' %}
+<!-- Main Content-->
+<main id='main' class="!tw-pt-[2rem]">
+
+      
+      <!--Some posts-->
+      <section class='features'>
+        <div class="section-header" data-aos="fade-in">
+            <span>FreeFire leaks</span>
+            <h2>FreeFire leaks</h2>
+        </div>
+      
+        <div class="container">
+          {% for item in post %}
+      
+            <div class="row gy-4 align-items-center shadow-lg features-item mb-3 pb-3" data-aos="fade-up">
+              <div class="col-md-5 order-1 order-md-2">
+                <img src={{item.image.url}} class="img-fluid" alt="">
+              </div>
+              <div class="col-md-7 order-2 order-md-1 ">
+                <h3>{{item.title}}</h3>
+                <p class="py-4 tw-text-lg tw-font-mono">
+                  {{item.get_intro}}..
+                </p>
+                <a href={% url 'post' item.slug %} class="readmore stretched-link tw-font-bold tw-text-lg  tw-text-blue-900"><span class="tw-pr-3">Learn More</span><i class="bi bi-arrow-right"></i></a>
+              </div>
+            
+              </div>
+          {% endfor %} 
+
+      </section>
+
+      {% comment %} pagination {% endcomment %}
+      <div class="flex-centered">
+              <nav aria-label="Page navigation " class="">
+              
+        <ul class="pagination    ">
+          {% if page_obj.has_previous %}
+          <li class="page-item ">
+            <a class="page-link" href="{% url 'blog' %}?page={{page_obj.previous_page_number}}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          {% endif %}
+        {% for num_page in paginator.page_range %}
+        {% if page_obj.number == num_page %}
+              <li class="page-item active" aria-current="page"><a class="page-link" href="{% url 'blog' %}?page={{num_page}}">{{num_page}}</a></li>
+
+              {% else %}
+              <li class="page-item "><a class="page-link" href="{% url 'blog' %}?page={{num_page}}">{{num_page}}</a></li>
+        {% endif %}
+            
+        {% endfor %}
+
+          {% if page_obj.has_next %}
+                    <li class="page-item ">
+            <a class="page-link " href="{% url 'blog' %}?page={{page_obj.next_page_number}}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+          {% endif %}
+
+        </ul>
+      </nav>
+      </div>
+
+  
+</main>
+<a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<div id="preloader"></div>
+{% endblock body %}
+
+<!-- ========== Start Scripts ========== -->
+{% block scripts %}
+{% include 'src/scripts.html' %}
+{% endblock scripts %}
+<!-- ========== End Scripts ========== -->

@@ -1,0 +1,152 @@
+{% extends 'src/generic_page_block.html' %}
+{% load static %} 
+{% block title%}{{post.title}} {% endblock title %}
+
+
+
+{% block body%}
+
+<!-- NavBar-->
+{% include 'src/nav.html' %}
+<!-- Main Content-->
+<main id="main">
+    <div class=" container align-content-center px-md-5 pb-5">
+        
+        <div class="d-grid col-md-10 mx-auto">
+            
+            <!-- post header -->
+            <div class="d-flex justify-content-between">
+                <h2 class="post-title mb-3 tw-font-mono">{{post.title}}</h2>
+
+                <!-- date time -->
+                <p class="tw-font-light tw-font-mono">{{post.get_formatted_time}}</p>
+            </div>
+            
+            <img src="{{post.image.url}}" alt="" class="w-100 mb-3">
+            
+            <p class="tw-text-lg tw-font-mono tw-whitespace-break-spaces">{{post.post}}</p>
+            <!--Comments-->
+            <div class=" tw-pt-[5rem]">
+                
+                <div class="tw-max-w-xl lg:tw-translate-x-9">
+                    <h2 class="tw-font-bold tw-text-lg tw-py-3  tw-text-blue-800">Comments</h2>
+
+                    <div id="comments_wrapper" class="container">
+                        <div class="text-center tw-text-gray-400">
+                            <h4 class="text-center">No comments yet</h4>
+                            <p>Be the first to comment</p>                            
+                        </div>
+
+                    </div>
+                
+                </div>
+           
+            <!-- drop comments -->
+                    <form action="" method="post" id="comment-form">
+                        {% csrf_token %}
+                        <div class="container d-flex flex-column align-content-lg-start gy-2 tw-max-w-xl">
+                            <p class="tw-font-mono tw-font-semibold py-3 tw-text-lg tw-text-blue-800">Create Comment</p>
+                            <input type="text" name="author" id="" placeholder="Name"  required class="form-control mb-2 tw-max-w-[200px] focus:tw-outline-none focus:tw-shadow-none tw-text-[12.5px]">
+                            <input type="text" name='post_slug' class='d-none' value={{post_slug}}>
+                            <textarea name="comment" id="" cols="30" rows="5" placeholder="comment" required class="form-control mb-2 focus:tw-outline-none focus:tw-shadow-none tw-text-[12.5px]"></textarea>
+                            <div class="">
+                               <input type="submit" value="Submit" class="btn btn-outline-primary">  
+                            </div>
+                        </div>
+                    </form>
+            <!-- end drop comments -->
+            </div>
+    </div>
+
+    
+    <!-- ========== Start success alert ========== -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="comment_toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                 <strong class="me-auto !tw-text-blue-700">Hurray <i class="fa fa-star"></i></strong>
+                <button type="button" class="btn-close fa-solid fa-close" data-bs-dismiss="toast" aria-label="Close">
+                </button>
+            </div>
+            <div class="toast-body !tw-bg-white !tw-text-gray-700 tw-font-mono">
+                commented succesfully
+            </div>
+        </div>
+    </div>    
+    <!-- ========== End success alert ========== -->
+
+    <!-- ========== Start error alert ========== -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="error_toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                 <strong class="me-auto text-danger">oops <i class="fa fa-sad-tear"></i></strong>
+                <button type="button" class="btn-close fa-solid fa-close" data-bs-dismiss="toast" aria-label="Close">
+                </button>
+            </div>
+            <div class="toast-body !tw-bg-white !tw-text-gray-700 tw-font-mono">
+                error occured
+            </div>
+        </div>
+    </div>
+    <!-- ========== End error alert ========== -->
+
+</main>
+
+
+<div id="preloader"></div>
+{% endblock body %}
+
+<!-- ========== Start Scripts ========== -->
+{% block scripts %}
+{% include 'src/scripts.html' %}
+<script>
+    const get_comments = (postslug) => {
+        var comment_wrapper = document.getElementById("comments_wrapper");
+        if (!comment_wrapper) return;
+        fetch("http://127.0.0.1:8000/api/comments/" + postslug)
+          .then((e) => e.json())
+          .then((response) => {
+            if(response.length == 0)return;
+            comment_wrapper.innerHTML = "";
+            
+            for (const iterator of response) {
+              comment_wrapper.innerHTML += formatComment(iterator);
+            }
+          });
+      };
+
+
+      const handle_comment = async (formdata) => {
+        const http_request = await fetch("http://127.0.0.1:8000/api/comments/"+'{{post_slug}}', {
+          method: "POST",
+          body: formdata,
+        });
+        const response = await http_request.json();
+        if (http_request.ok) {
+          // show toast
+          var toast = new bootstrap.Toast(comment_toast);
+          toast.show();
+        } else {
+          // show error toast
+          var toast = new bootstrap.Toast(error_toast);
+          toast.show();
+        }
+        get_comments('{{post_slug}}');
+      
+      };
+    get_comments('{{post_slug}}');
+    console.log('{{post_slug}}')
+    const comment_form = document.getElementById('comment-form');
+    var form_data;
+    comment_form.addEventListener('submit',(e)=>{
+        e.preventDefault();
+        form_data = new FormData(e.target);
+        handle_comment(form_data)
+        setTimeout(()=>{
+            e.target.reset() 
+        },1000)
+       
+
+    })
+</script>
+{% endblock scripts %}
+<!-- ========== End Scripts ========== -->

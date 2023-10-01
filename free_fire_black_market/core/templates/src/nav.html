@@ -1,0 +1,49 @@
+{% load static %}
+<header  id="header" class="header !tw-py-4 d-flex align-items-center fixed-top nav-bg">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="{% url 'index' %}" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+         <img src="{% static 'free_fire_images/logo_img.png' %}" alt="" > 
+
+      </a>
+
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="{% url 'index' %}" class="active">Home</a></li>
+          <li><a href="{% url 'blog' %}">Blog</a></li>
+     
+          <li><a href="{% url 'pricing' %}">
+            Membership 
+            <!-- display locked icon only if user subscription is off else display -->
+            {% if not subscription_active %}
+            <i class="fa fa-lock"></i>
+            {% else %}
+            <i class="fa fa-person"></i>
+            {% endif %}
+          </a></li>
+
+          </li>
+
+          <li><a href="{% url 'contact' %}">Contact</a></li>
+          <li class="dropdown"><a href="" id='dropdown'><span>Services</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+            <ul>
+              
+                  <li><a href="{% url 'handle-unban' %}">Unban Account</a></li>
+                  <li><a href="{% url 'tutorials' %}">Tutorials</a></li>
+                  <li><a href="{% url 'tutorials' %}blacklisted">Blacklisted Account</a></li>
+                  <li><a href="{% url 'topup' %}">Top Up</a></li>
+                  <li><a href="{% url 'tutorials' %}negative">Negative Diamonds</a></li>
+            </ul>
+          </li>
+          <li><a class="get-a-quote tw-text-center" href="{% url 'contact' %}report">Send a Report</a></li>
+          {% comment %} todo change the second button to be an outlined version of the first {% endcomment %}
+          <li><a class="get-a-quote tw-text-center login_btn" href="{% url 'auth' %}">Login</a></li>
+        </ul>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+

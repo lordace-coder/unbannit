@@ -1,0 +1,116 @@
+{% extends 'src/generic_page_block.html' %}
+{% load static %}
+{% block title %}Become a member{% endblock title %}
+{% block body %}
+<!-- NavBar-->
+{% include 'src/nav.html' %}
+ <!-- ======= Breadcrumbs ======= -->
+ <main id='main' class="!tw-pt-[4.5rem]">
+ <div class="breadcrumbs">
+    <div class="page-header d-flex align-items-center lg:tw-bg-fixed" style="background-image: url({% static 'free_fire_images/halloween.jpg' %});">
+        <div class="container position-relative">
+          <div class="row d-flex justify-content-center">
+            <div class="col-lg-6 text-center">
+              <h2>Pricing</h2>
+              <p>BECOME A MEMBER TODAY,Get valuable advantages over other users and faster customer support.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav>
+        <div class="container">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li>Pricing</li>
+          </ol>
+        </div>
+      </nav>
+    </div><!-- End Breadcrumbs -->
+
+  <!-- ======= Pricing Section ======= -->
+  <section id="pricing" class="pricing">
+    <div class="container" data-aos="fade-up">
+      <div class="section-header">
+        <span>Pricing</span>
+        <h2>Pricing</h2>
+      </div>
+      <div class="row gy-4">
+
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="pricing-item">
+            <h3>Free Plan</h3>
+            <h4><sup>$</sup>0<span> / month</span></h4>
+            <ul>
+              <li><i class="bi bi-check"></i> Access to FreeFire leaks and tricks.</li>
+              <li><i class="bi bi-check"></i> CustomerCare reply within 12hrs.</li>
+
+              <li class="na"><i class="bi bi-x"></i> <span>20% Discount for account recovery services.</span></li>
+              <li class="na"><i class="bi bi-x"></i> <span>Negative gems account recovery.</span></li>
+            </ul>
+            <button disabled class="buy-btn tw-cursor-pointer " disabled>Active Plan</button>
+          </div>
+        </div><!-- End Pricing Item -->
+
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="pricing-item featured">
+            <h3>Gamer Plan</h3>
+            <h4><sup>$</sup>{{subscribtions.0.amount}}<span> / month</span></h4>
+            <ul>
+              <li><i class="bi bi-check"></i> CustomerCare reply within 4hrs.</li>
+              <li><i class="bi bi-check"></i> 20% Discount for account recovery services.</li>
+              <li><i class="bi bi-check"></i> No cooldown time for account recovery services.</li>
+              <li><i class="bi bi-check"></i> Resolve negative diamonds.</li>
+              <li><i class="bi bi-check"></i> Restore blacklisted accounts.</li>
+            </ul>
+            {% if subscription_active.get_plan in subscribtions.0.item_name %}
+            <button class="buy-btn tw-cursor-pointer" >Active</button>
+
+            {% else %}
+            <button class="btn btn-primary" onclick="handle_gem_purchase('{{game_plan_btn}}')">Purchase</button>
+
+              {% endif %}          </div>
+        </div><!-- End Pricing Item -->
+
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="pricing-item">
+            <h3>Hackers Plan</h3>
+            <h4><sup>$</sup>{{subscribtions.1.amount}}<span> / 3months</span></h4>
+            <ul>
+              <li><i class="bi bi-check"></i> CustomerCare reply within 1hr.</li>
+              <li><i class="bi bi-check"></i> 20% Discount in account recovery services.</li>
+              <li><i class="bi bi-check"></i> No cooldown time for account recovery services</li>
+              <li><i class="bi bi-check"></i> Get Emails on new updates,sensitivity settings,account recovery information</li>
+            </ul>
+            {% if subscription_active.get_plan in subscribtions.1.item_name %}
+            <button class="buy-btn tw-cursor-pointer" >Active</button>
+
+            {% else %}
+            <button class="btn btn-primary" onclick="handle_gem_purchase('{{hackers_plan_btn}}')">Purchase</button>
+
+            {% endif %}
+
+          </div>
+        </div><!-- End Pricing Item -->
+
+      </div>
+
+    </div>
+  </section><!-- End Pricing Section -->
+
+</div>
+
+</main>
+{% endblock body %}
+<!-- ========== Start Scripts ========== -->
+{% block scripts %}
+{% include 'src/scripts.html' %}
+<script>
+  function buyItem(itemId){
+    window.location.href = '/purchase-status/confirm-purchase/'+itemId
+  }
+  const handle_gem_purchase = item_id=>{
+    window.location.href = '{% url "topup" %}confirm/'+item_id
+  }
+</script>
+{% endblock scripts %}
+<!-- ========== End Scripts ========== -->

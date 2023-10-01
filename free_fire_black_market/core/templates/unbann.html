@@ -1,0 +1,202 @@
+{% extends 'src/generic_page_block.html' %} 
+{% load static %} 
+{% block title%}Welcome {% endblock title %} {% block body%}
+
+<!-- NavBar-->
+{% include 'src/nav.html' %}
+<!-- Main Content-->
+
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="topic tw-py-[2rem]">
+          <h3>How to Check if Your FF Account is Banned</h3>
+          <p>
+            Logging into free fire from a banned account might cause that device
+            to get a HWD restriction.
+          </p>
+          <p>
+            Luckily Garena has provided a way to verify if your account is
+            banned.Thus if you suspect you might have landed yourself in a ban
+            <a target="_blank" href="https://ff.garena.com/en/support/">check it here.</a>
+          </p>
+          <p>
+            All you have to do is enter your id in the input provided,you will
+            see the confirmation message '<i
+              >we have confirmed that this account has used hacks and has
+              already been banned'</i
+            >.
+          </p>
+          <!-- put image here -->
+          <div class="container-md py-5">
+            <img src="{% static 'free_fire_images/unban_image_checker.png' %}" class="mx-auto w-100 card " alt="">
+          </div>
+          <p>
+            Otherwise,if the account is not banned ,you'll see the folllowing
+            message:"<i
+              >There is currently not enough evidence to prove that this user is
+              using hacks.ThankYou for the support!</i
+            >
+          </p>
+        </div>
+
+        <div class="topic tw-py-[2rem]">
+            <h3>Can You Unban a FreeFire Account?</h3>
+            <p>While there is no specific answer for every situation,<span class="tw-font-bold tw-text-teal-500">YES</span>,quite a few accounts bans can be overturned.Depending for the reason for its ban.</p>
+            <p>For example,as with other game,not every single ban is issued correctly.Mobile devices ,like computers can run alot of services and scripts in the background,like apps and software which can in events,trigger a false-positive ban,even though they are not cheats.</p>
+            
+            <p>
+                Apart from that most mobile devices are rooted or jailbroken,with all kinds of custom ROMs and apps which can trigger a false ban.
+            </p>
+            <p>
+                Furthermore,you can also land a ban in FF as a result of multiple player reports against you this  can very well happen even when your not cheating.
+            </p>
+            <p>
+                Say your an unusual lucky win streak or that you managed to hit a couple of crazy shots,thats enough reason for your fellow players to suspect you of cheating.And if enough players report you within a short time,The system will automatically suspend your account.
+            </p>
+            <p>
+                Bottom line is <span class="tw-font-bold tw-text-teal-500">YES</span> all accounts are unbannable,though some tend to be harder to untangle than others.
+            </p>
+        </div>
+        
+        <div class="topic tw-py-[2rem]">
+            <h3>How to get Your Free Fire Account Unbanned</h3>
+            <p>
+                If you are sure that you havent engaged in any ILLEGAL ACTIVITIES in your account,follow the steps below ,ELSE <a href="{% url 'handle-unban' %}">Click Here.</a>
+            </p>
+
+            <p>Heres how to submit a FreeFire ban appeal:</p>
+
+            <ol>
+                <li>
+                    <!-- todo  add link -->
+                    Go to their official support page <a target="_blank" href="https://ffsupport.garena.com/hc/en-us/requests/new">here</a>: <br>
+                    Login to your account by clickin on the signin yellow button at the top red corner.
+                </li>
+                <div class="container-md py-5">
+                  <img class="w-75 mx-auto card" src="{% static 'free_fire_images/signin.png' %}" alt="">
+                </div>
+                <li>
+                    Input your accounts email address: <br>
+                    you will recieve a reply at on the email address entered,this email should also be linked to your free fire account.
+                </li>
+                <li>
+                    Select 'ban appeal' under the request type: <br>
+                    if your unable to login but for a different reason.you can choose 'Account related concern' instead.
+                </li>
+
+                <li>
+                    Write your FF ban appeal under 'Description': <br>
+                    Unbannit also comes in handy here, to view our unban appeal generator click <a class="btn btn-outline-primary btn-sm" href="#" role="button" data-bs-toggle="modal" data-bs-target="#modalId">Here</a>
+                  <br> <br>
+                <!-- images -->
+                <div class="container-md py-5">
+                  <img class="w-75 mx-auto card" src="{% static 'free_fire_images/description.png' %}" alt="">
+                </div>
+                  Once that is filled in,you can go  ahead and press the blue 'Submit' buuton underneath the form.you can skip the attachments field if you dont have any evidence to support your ban appeal.
+                </li>
+
+                <li>
+                  And your done, however if the ban persists then peharps you require our PAID auto unban service 
+                  <a  class="btn btn-success btn-sm" href="{% url 'handle-unban' %}" role="button">Unban <i class="fa fa-dollar"></i></a>
+                </li>
+            </ol>
+        </div>
+      </div>
+
+      <div class="col-lg-4"></div>
+
+
+      
+      <!-- Modal Body -->
+      <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+      <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title tw-capitalize" id="modalTitleId">Generate apology note</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <textarea name="" id="apology_note" class="w-100 tw-h-[10rem]" ></textarea>
+            </div>
+            <div class="modal-footer ">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        
+                <button type="button" class="btn btn-primary" onclick="copy_text(this)" data-bs-toggle="button" aria-pressed="false" autocomplete="off">
+
+                  <span>
+                    Copy
+                  </span> <i class="fa fa-copy"></i>
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+            <!-- Modal Body -->
+      <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+      <div class="modal fade" id="autoModal" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title tw-capitalize" id="modalTitleId">Jump Straight to our Auto-Unban Page</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+           
+            <div class="p-2">
+              <p class='tw-max-w-[600px] mx-auto text-center'>
+                Assured account unban within 12 days, all you need is your id and email or facebook id.
+
+              </p>
+            </div>
+            <div class="modal-footer justify-content-evenly">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        
+                <button type="button" class="btn btn-primary" onclick="window.location.href=`{% url 'handle-unban' %}` " data-bs-toggle="button" aria-pressed="false" autocomplete="off">
+                  Quick Unban
+              </button>
+
+            </div>
+          </div>
+        </div>
+      
+
+    </div>
+  </div>
+</main>
+
+<div id="preloader"></div>
+{% endblock body %}
+
+<!-- ========== Start Scripts ========== -->
+{% block scripts %} {% include 'src/scripts.html' %} 
+<script>
+  var autoModal = new bootstrap.Modal(document.getElementById('autoModal'), {
+    keyboard: false
+  })
+      autoModal.show()
+  const textField = document.getElementById('apology_note')
+  textField.value = `Garena Free Fire Support Team,
+
+I apologize for my previous actions in using hacks during gameplay, which resulted in my account being banned. I fully understand that this goes against the principles of fair play and the community guidelines set forth by Garena Free Fire.
+
+I deeply regret my decision and acknowledge the negative impact it has on the gaming experience for myself and other players. I assure you that I have learned my lesson and such behavior will never be repeated.
+
+I kindly request your understanding and the opportunity to rectify my mistake. I am committed to abiding by the rules and promoting fair play moving forward.
+
+Thank you for your time and consideration.`
+
+  const myModal = new bootstrap.Modal(document.getElementById('modalId'), {})
+  const copy_text = (e)=>{
+    let copy_item = textField.value
+    navigator.clipboard.writeText(copy_item)
+    var btn_text = e.querySelector('span')
+    btn_text.innerHTML = 'Copied'
+  }
+</script>
+{% endblock scripts %}
+<!-- ========== End Scripts ========== -->

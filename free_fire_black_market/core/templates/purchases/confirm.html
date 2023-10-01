@@ -1,0 +1,75 @@
+{% extends 'src/generic_page_block.html' %}
+{% load static %} 
+{% block title%}Forgot password {% endblock title %}
+
+
+
+{% block body%}
+<style>
+    .iconslist {
+  display: grid;
+  max-width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+  padding-top: 15px;
+}
+.icon {
+  background-color: #fff;
+  border-radius: 0.25rem;
+  text-align: center;
+  color: #012970;
+  padding: 15px 0;
+}
+.iconslist .label {
+  font-family: var(--bs-font-monospace);
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  padding: 0.15rem;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #666;
+}
+</style>
+<!-- NavBar-->
+{% include 'src/nav.html' %}
+<main class="bg-light tw-h-screen">
+    <div class="container">
+        <div class="d-grid col-md-8 col-lg-4 mx-auto ">
+            <div class="section_header_txt mb-2 text-center" style="font-size: 19px;">Complete Purchase</div>
+                <div class="icon border border-primary" >
+                  {% if 'gems' in item.item_name %}
+                      <i class="ri-vip-diamond-fill" style="font-size: 40px;"></i>
+
+                  {% else %}
+                    <i class="fa fa-user" style="font-size: 40px;"></i>
+                  {% endif %}
+            <span class="badge bg-primary">
+                <i class="fa fa-add"></i>
+            </span>
+            <p>Item:{{ item.item_name }}</p>
+            <p><i class="fa fa-dollar-sign"></i> {{ item.amount }}</p>
+            <div class="label">
+            {{purchase_btn.render_form}}
+            </div>
+        </div>
+        </div>        
+    </div>
+
+
+</main>
+
+{% endblock body %}
+{% block scripts %}
+<script src={% static "assets/vendor/bootstrap/js/bootstrap.bundle.min.js" %}></script>
+<script src={% static "assets/vendor/aos/aos.js" %}></script>
+<script defer src={% static "assets/js/main.js" %}></script>
+<script src={% static "assets/vendor/purecounter/purecounter_vanilla.js" %}></script>
+<script src={% static "assets/vendor/glightbox/js/glightbox.min.js" %}></script>
+<script src={% static "assets/vendor/swiper/swiper-bundle.min.js" %}></script>
+<script src={% static "assets/vendor/aos/aos.js" %}></script>
+
+
+{% comment %} your scripts here {% endcomment %}
+{% endblock scripts %}

@@ -1,0 +1,138 @@
+{% extends 'src/generic_page_block.html' %}
+{% load static %} 
+{% block title%}Payment Invoice {% endblock title %}
+
+
+
+{% block body%}
+
+<!-- NavBar-->
+{% include 'src/nav.html' %}
+<!-- Main Content-->
+<main class='pb-5 purple-bg'>
+  <style>
+    .purple-bg{
+      background-color: #21D4FD;
+      background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+      
+  
+    }
+  </style>
+
+    <div class="container">
+      <div class="d-flex justify-content-end p-4">
+        <button type="button" onclick="generatePDF()" id="save-pdf-btn" class="btn btn-success">
+          <i class="fa fa-download"></i>
+          Save
+        </button>
+      </div>
+    </div>
+    <div style="min-width:400px" id="invoice" class="card w-50 mx-auto">
+        <div class="card-header bg-black"></div>
+        <div class="card-body">
+      
+          <div class="container">
+            <div class="row">
+              <div class="col-xl-12">
+                <i class="far fa-building text-danger fa-6x float-start"></i>
+              </div>
+            </div>
+      
+      
+
+      
+            <div class="row text-center">
+              <h3 class="text-uppercase text-center mt-3" style="font-size: 40px;">Invoice</h3>
+              <p>Invoice id :{{invoice.item_id}}</p>
+            </div>
+      
+            <div class="row mx-3">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Description</th>
+                    <th scope="col">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                  <tr>
+                    <td>{{invoice.item_name}}</td>
+                    <td><i class="fas fa-dollar-sign"></i> {{cost}}</td>
+                  </tr>
+                </tbody>
+              </table>
+      
+            </div>
+            <div class="row">
+              <div class="col-xl-8">
+                <ul class="list-unstyled float-end me-0">
+                  <li><span class="me-3 float-start">Total Amount:</span><i class="fas fa-dollar-sign"></i> {{invoice.amount}}
+                  </li>
+                  <li> <span class="me-5">Discount:</span><i class="fas fa-dollar-sign"></i> {{discount}}</li>
+                  
+                </ul>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-xl-8" >
+                <p class="float-end"
+                  style="font-size: 30px; color: red; font-weight: 400;font-family: Arial, Helvetica, sans-serif;">
+                  Total:
+                  <span><i class="fas fa-dollar-sign"></i>{{invoice.amount}}</span></p>
+              </div>
+      
+            </div>
+      
+            <div class="row mt-2 mb-5">
+              <p class="fw-bold">Date: <span class="text-muted">{{invoice.format_date}}</span></p>
+              
+            </div>
+      
+          </div>
+      
+      
+      
+        </div>
+        <div class="card-footer bg-black"></div>
+      </div>
+</main>
+
+
+<div id="preloader"></div>
+{% endblock body %}
+
+<!-- ========== Start Scripts ========== -->
+{% block scripts %}
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+{% include 'src/scripts.html' %}
+
+<script>
+function generatePDF() {
+  // Choose the element id which you want to export.
+  var element = document.getElementById("invoice");
+  element.style.width = "500px";
+  element.style.height = "700px";
+  var opt = {
+    margin: 0.5,
+    filename: "my_invoice.pdf",
+    image: { type: "jpeg", quality: 1 },
+    html2canvas: { scale: 1 },
+    jsPDF: {
+      unit: "in",
+      format: "letter",
+      orientation: "portrait",
+      precision: "12",
+    },
+  };
+
+  // choose the element and pass it to html2pdf() function and call the save() on it to save as pdf.
+  html2pdf().set(opt).from(element).save();
+}
+</script>
+{% endblock scripts %}
+<!-- ========== End Scripts ========== -->

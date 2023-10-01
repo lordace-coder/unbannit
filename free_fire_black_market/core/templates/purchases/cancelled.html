@@ -1,0 +1,34 @@
+{% extends '../src/generic_page_block.html' %}
+{% load static %} 
+{% block title%}Confirm Purchase {% endblock title %}
+
+
+
+{% block body%}
+
+<!-- NavBar-->
+{% include '../src/nav.html' %}
+<style>
+    *{
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    }
+</style>
+<!-- Main Content-->
+<main class="flex-centered tw-bg-slate-800 tw-h-[100vh]">
+    <div class="w-25 h-25 tw-min-w-[300px] tw-min-h-max tw-rounded-lg tw-text-center tw-shadow-xl  tw-shadow-blue-600 tw-text-white py-3 tw-bg-blue-800">
+        <h5 class="mb-4">
+            sorry purchase failed
+        </h5>
+        <a  class="btn btn-primary" href="{% url 'index' %}" role="button">return <i class="fa-home-alt fa"></i></a>
+    </div>
+</main>
+
+
+<div id="preloader"></div>
+{% endblock body %}
+
+<!-- ========== Start Scripts ========== -->
+{% block scripts %}
+{% include '../src/scripts.html' %}
+{% endblock scripts %}
+<!-- ========== End Scripts ========== -->

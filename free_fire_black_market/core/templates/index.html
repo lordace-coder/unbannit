@@ -1,0 +1,352 @@
+{% extends 'src/generic_page_block.html' %}
+{% load static %} 
+{% block title%}Welcome {% endblock title %}
+
+
+
+{% block body%}
+
+<!-- NavBar-->
+{% include 'src/nav.html' %}
+<!-- Main Content-->
+<style>
+  a{
+    cursor: pointer;
+  }
+</style>
+<main id='main' class="!tw-pt-[2rem]">
+    <!--hero section-->
+    <section id="hero" class="hero d-flex align-items-center ">
+      <div class="container">
+        {% comment %} video background {% endcomment %}
+        <video autoplay loop muted plays-inline class="background-clip">
+          {% comment %} todo change video later  {% endcomment %}
+          <source src="{% static '0828.mp4' %}" type='video/mp4' />
+        </video>
+        <div class="row gy-4 d-flex justify-content-between">
+          <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+            <h2 data-aos="fade-up">Dear Survivors</h2>
+            <p data-aos="fade-up" data-aos-delay="100">Your sure plug for Unbanning FreeFire accounts,with over a thousand unbanned accounts.
+              Our top up system is most reliable,refunds absolutely supported.We also help players clear other problems such as blacklisted accounts and negative diamonds.</p>
+  
+  
+            <div class="row gy-4" data-aos="fade-up" data-aos-delay="400">
+  
+              <div class="col-lg-3 col-6">
+                <div class="stats-item text-center w-100 h-100">
+                  <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
+                  <p>Members</p>
+                </div>
+              </div><!-- End Stats Item -->
+  
+  
+              <div class="col-lg-3 col-6">
+                <div class="stats-item text-center w-100 h-100">
+                  <span data-purecounter-start="0" data-purecounter-end="1453" data-purecounter-duration="1" class="purecounter"></span>
+                  <p>Accounts Recovered</p>
+                </div>
+              </div><!-- End Stats Item -->
+  
+              <div class="col-lg-3 col-6">
+                <div class="stats-item text-center w-100 h-100">
+                  <span data-purecounter-start="0" data-purecounter-end="32" data-purecounter-duration="1" class="purecounter"></span>
+                  <p>Workers</p>
+                </div>
+              </div><!-- End Stats Item -->
+  
+            </div>
+          </div>
+  
+          {% comment %} <div class="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out">
+            <!-- ========== Start side hero image ========== -->
+            <img src={% static "free_fire_images/kelly.png" %} class="img-fluid mb-3 mb-lg-0 md:tw-block tw-hidden" alt="">
+            
+            <!-- ========== End side hero image ========== -->
+          </div> {% endcomment %}
+  
+        </div>
+      </div>
+    </section>
+    {% comment %} end hero section {% endcomment %}
+    <section id="featured-services" class="featured-services">
+        <div class="section-header">
+            <span>Need Help With</span>
+            <h2>Need Help With</h2>
+  
+          </div>
+  
+        <div class="container">
+  
+          <div class="row gy-4">
+  
+            <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up">
+              <div class="icon flex-shrink-0"><i class="fa-solid fa-user-alt-slash"></i></div>
+              <div>
+                <h4 class="title section_header_txt">Banned Account</h4>
+                <p class="description">Temporary or Permanently suspended accounts.</p>
+                <a onclick="showModal('banned_acct')" class="readmore stretched-link"><span>Learn More</span><i class="bi bi-arrow-right"></i></a>
+              </div>
+            </div>
+            <!-- End Service Item -->
+  
+            <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="100">
+              <div class="icon flex-shrink-0"><i class="fa-solid fa-coins"></i></div>
+              <div>
+                <h4 class="title section_header_txt">Negative Diamonds</h4>
+                <p class="description">Account negated Diamonds.</p>
+                <a onclick="showModal('negative_diam')" class="readmore stretched-link"><span>Learn More</span><i class="bi bi-arrow-right"></i></a>
+              </div>
+            </div><!-- End Service Item -->
+  
+            <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="200">
+              <div class="icon flex-shrink-0"><i class="fa-solid bi-slash-circle-fill"></i></div>
+              <div>
+                <h4 class="title">BlackListed Accounts</h4>
+                <p class="description">Account still active but unable to matchmake.</p>
+                <a onclick="showModal('blacklist')" class="readmore stretched-link"><span>Learn More</span><i class="bi bi-arrow-right"></i></a>
+              </div>
+            </div><!-- End Service Item -->
+  
+          </div>
+  
+        </div>
+      </section>
+
+      <!--Call to action-->
+      <section id="call-to-action" class="call-to-action">
+        <div class="container" data-aos="zoom-out">
+  
+          <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+              <h3>Just How Much is your Account worth to you!!!</h3>
+              <p>Connect with our chatbot today and solve your problems 70% faster.</p>
+              <a class="cta-btn" target="_blank" href="https://t.me/unbaniTbot">Contact Unbannit chatbot <i class="bi-telegram bi"></i> </a>
+            </div>
+          </div>
+  
+        </div>
+      </section>
+          <!-- ======= Features Section ======= -->
+    <section id="features" class="features">
+        <div class="container">
+  
+          <div class="row gy-4 align-items-center features-item " data-aos="fade-up">
+  
+            <div class="col-md-5 overflow-hidden">
+              <img src={% static "free_fire_images/suspended.jpg" %} class="img-fluid  tw-scale-125" alt="">
+            </div>
+            <div class="col-md-7">
+              <h3>Account Recovery</h3>
+              <p class="fst-italic">
+                Before you attempt account recovery make sure you.
+              </p>
+              <ul>
+                <li><i class="bi bi-check"></i> Have your correct login details.</li>
+                <li><i class="bi bi-check"></i> Have your id and IGN (In Game Name).</li>
+                <li><i class="bi bi-check"></i> No active hacks or illegal config files in your gaming device.</li>
+              </ul>
+            </div>
+          </div><!-- Features Item -->
+  
+          <div class="row gy-4 align-items-center features-item" data-aos="fade-up">
+  
+          
+            <div class="col-md-7">
+              <h3>Negative Diamonds</h3>
+              <p class="fst-italic">
+                Before requesting help make sure that you..
+              </p>
+              <ul>
+                <li><i class="bi bi-check"></i> Didnt Use Third Party apps or sites for Topups</li>
+                <li><i class="bi bi-check"></i> Have your id and IGN (In Game Name).</li>
+                <li><i class="bi bi-check"></i> Didnt request refund after making payments</li>
+              </ul>
+            </div>
+              <div class="col-md-5">
+              <img src={% static "free_fire_images/negative_diam.jpeg" %} class="img-fluid" alt="">
+            </div>
+          </div>
+  
+        </div>
+      </section><!-- End Features Section -->
+      
+      <!--Some posts-->
+      <section class='features'>
+        <div class="section-header" data-aos="fade-in">
+            <span>FreeFire leaks</span>
+            <h2>FreeFire leaks</h2>
+        </div>
+      
+        <div class="container">
+          {% for item in post %}
+      
+            <div class="row gy-4 align-items-center shadow-lg features-item mb-3 pb-3" data-aos="fade-up">
+              <div class="col-md-5 order-1 order-md-2">
+                <img src={{item.image.url}} class="img-fluid" alt="">
+              </div>
+              <div class="col-md-7 order-2 order-md-1 ">
+                <h3>{{item.title}}</h3>
+                <p class="py-4 tw-text-lg ">
+                  {{item.get_intro}}..
+                </p>
+                <a href={% url 'post' item.slug %} class="readmore stretched-link tw-font-bold tw-text-lg  tw-text-blue-900"><span class="tw-pr-3">Learn More</span><i class="bi bi-arrow-right"></i></a>
+              </div>
+            
+              </div>
+          {% endfor %} 
+
+      </section>
+
+      <section id="testimonials" class="testimonials">
+        <div class="container">
+  
+          <div class="slides-1 swiper" data-aos="fade-up">
+            <div class="swiper-wrapper">
+  
+              <div class="swiper-slide">
+                <div class="testimonial-item">
+                  <h3>Gama 24k</h3>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    I thought my free fire account was banned forever,im really greatful for getting my account back.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div><!-- End testimonial item -->
+  
+              <div class="swiper-slide">
+                <div class="testimonial-item">
+                  <h3>jay jay</h3>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                      cleared my account from negative gems and unbanned my friends account,what more could i ask for.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div><!-- End testimonial item -->
+  
+              <div class="swiper-slide">
+                <div class="testimonial-item">
+                  <h3>Jena Karlis</h3>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                      yeah the unban service works perfectly even if you used hacks ,i just hope you guys can work un the speed since it currently takes 12 days.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div><!-- End testimonial item -->
+  
+              <div class="swiper-slide">
+                <div class="testimonial-item">
+                  <h3>Matt Brandon</h3>
+                  <h4>Freelancer</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                      I love the membership discount,i created a small business where i unban peoples freefire accounts for the same price as unbannit and keep my interest via the membership discount.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div><!-- End testimonial item -->
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+  
+        </div>
+      </section>
+{% include 'src/features.html' %}
+  
+
+</main>
+<a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<div id="preloader"></div>
+<!-- Modal trigger button -->
+
+<!-- Modal Body -->
+<!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+<div class="modal fade" id="banned_acct_modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title section_header_txt" id="modalTitleId">Banned Account</h5>
+          <button type="button" class="btn-close fa fa-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Some of our services may seem complicated at first,We recommend reading our tutorials first.
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn confirm_btn" onclick="getPage(`{% url 'purchase_acct' %}`)">Tutorials</button>
+        <button type="button" class="btn denied_btn" onclick="getPage(`{% url 'handle-unban' %}`)">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal2 -->
+<div class="modal fade" id="negative_diam_modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title section_header_txt" id="modalTitleId">Negative Diamonds</h5>
+          <button type="button" class="btn-close fa fa-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Some of our services may seem complicated at first,We recommend reading our tutorials first.
+        <br>
+        secondly this service is exclusivly for members only.
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn confirm_btn" onclick="getPage(`{% url 'tutorials' %}negative`)">Tutorials</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal3 -->
+
+<div class="modal fade" id="blacklist_modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title section_header_txt" id="modalTitleId">BlackList</h5>
+          <button type="button" class="btn-close fa fa-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Some of our services may seem complicated at first,We recommend reading our tutorials first.
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn confirm_btn" onclick="getPage(`{% url 'tutorials' %}`)">Tutorials</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock body %}
+
+<!-- ========== Start Scripts ========== -->
+{% block scripts %}
+{% include 'src/scripts.html' %}
+
+<script>
+  
+  const showModal = (modal)=>{
+    var myModal = new bootstrap.Modal(document.getElementById(modal+'_modal'), {})
+    myModal.show()
+  }
+</script>
+{% endblock scripts %}
+<!-- ========== End Scripts ========== -->

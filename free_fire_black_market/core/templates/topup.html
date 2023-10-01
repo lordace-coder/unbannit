@@ -1,0 +1,76 @@
+{% extends 'src/generic_page_block.html' %}
+{% load static %} 
+{% block title%}Forgot password {% endblock title %}
+
+
+
+{% block body%}
+
+<!-- NavBar-->
+{% include 'src/nav.html' %}
+
+<style>
+  .iconslist {
+display: grid;
+max-width: 100%;
+grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+gap: 1.25rem;
+padding-top: 15px;
+}
+.icon {
+background-color: #fff;
+border-radius: 0.25rem;
+text-align: center;
+color: #012970;
+padding: 15px 0;
+}
+.iconslist .label {
+font-family: var(--bs-font-monospace);
+display: inline-block;
+width: 100%;
+overflow: hidden;
+padding: 0.15rem;
+font-size: 12px;
+text-overflow: ellipsis;
+white-space: nowrap;
+color: #666;
+}
+</style>
+<main class="bg-light ">
+    <div class="m-5">
+        <h3 class="section_header_txt text-center">Our Offers</h3>
+            <div class="col-lg-6 col-md-8 container mx-auto iconslist ">
+                {% for item in data %}
+                <div class="icon shadow-sm">
+                  <i class="ri-vip-diamond-fill"></i>
+                  <p>{{ item.item_name }}</p>
+                  <p><i class="fa fa-dollar-sign"></i> {{ item.amount }}</p>
+                  <div class="label">
+                    <button class="btn btn-primary" onclick="handle_gem_purchase('{{item.item_id}}')">Purchase</button>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>     
+    </div>
+    
+</main>
+
+{% endblock body %}
+
+{% block scripts %}
+<script src={% static "assets/vendor/bootstrap/js/bootstrap.bundle.min.js" %}></script>
+<script src={% static "assets/vendor/aos/aos.js" %}></script>
+<script defer src={% static "assets/js/main.js" %}></script>
+<script src={% static "assets/vendor/purecounter/purecounter_vanilla.js" %}></script>
+<script src={% static "assets/vendor/glightbox/js/glightbox.min.js" %}></script>
+<script src={% static "assets/vendor/swiper/swiper-bundle.min.js" %}></script>
+<script src={% static "assets/vendor/aos/aos.js" %}></script>
+
+<script>  
+  const handle_gem_purchase = item_id=>{
+    window.location.href = '{% url "topup" %}confirm/'+item_id
+  }
+</script>
+
+{% comment %} your scripts here {% endcomment %}
+{% endblock scripts %}
