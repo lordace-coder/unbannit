@@ -108,6 +108,33 @@
     </div>
   </div>
 
+
+
+
+  <!-- warning modal -->
+  <!-- Modal trigger button -->
+
+  <!-- Modal Body -->
+  <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+  <div class="modal fade" id="warning-modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitleId">
+            Before You Continue..
+          </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          We recommend that you only unban one account at a time to avoid conflicts with the unban bot. <br> However if you want to unban multiple accounts at once,create multiple accounts.
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+  
+
 <div id="preloader"></div>
 {% endblock body %}
 
@@ -137,6 +164,12 @@
         //fetch('{% url 'send_unban_mail' %}'+data.player_acct)
         paymentModal.show()
     })
+
+ 
+    
+    const warningModal = new bootstrap.Modal(document.getElementById('warning-modal'),{})
+    warningModal.show()
+
 </script>
 {% endblock scripts %}
 <!-- ========== End Scripts ========== -->

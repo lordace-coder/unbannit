@@ -36,11 +36,11 @@ def paypal_payment_received(sender, **kwargs):
             if 'unban' in mytransaction.item_name:
                 # verify that current user has no current unban service
                 qs = UnbanActive.objects.filter(user = mytransaction.user)
-                if not qs.exists:
+                if not qs.exists():
                     unban_service = UnbanActive.objects.create(user = mytransaction.user)
                     unban_service.save()
+                
             if 'plan' in mytransaction.item_name:
-                print('chckpoint')
                 item = Store.objects.get(item_name = ipn_obj.item_name)
                 subscription_plan = 'A' if 'gamer' in mytransaction.item_name else 'B'
                 # check if subscribtion already exists
