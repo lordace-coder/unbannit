@@ -1,3 +1,4 @@
+from api.models import UnbanActive
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -32,6 +33,12 @@ def paypal_payment_received(sender, **kwargs):
         else:
             mytransaction.paid = True
             mytransaction.save()
+            if 'unban' in mytransaction.item_name:
+                # verify that current user has no current unban service
+                qs = UnbanActive.objects.filter(user = mytransaction.user)
+                if not qs.exists:
+                    unban_service = UnbanActive.objects.create(user = mytransaction.user)
+                    unban_service.save()
             if 'plan' in mytransaction.item_name:
                 print('chckpoint')
                 item = Store.objects.get(item_name = ipn_obj.item_name)
