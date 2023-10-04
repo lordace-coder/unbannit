@@ -7,7 +7,7 @@ from . import views
 urlpatterns = [
         # get urls
     path('',views.get_all_urls,name='get-all-urls'),
-
+    path('time-left',views.get_time_left,name='time-left'),
     path('comments/<slug:slug>',views.CreateCommentApiView.as_view()),
     path('forgot_password/',views.ForgotPasswordApiView,name='recover-password'),
     path('forgot_password/verify_token',views.VerifyTokenApiView,name='verify-password-token'),

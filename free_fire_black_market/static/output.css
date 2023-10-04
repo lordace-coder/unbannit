@@ -136,6 +136,12 @@
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
+.\!tw-bg-contain {
+  background-size: contain !important;
+}
+.\!tw-bg-center {
+  background-position: center !important;
+}
 .tw-p-3 {
   padding: 0.75rem;
 }
@@ -209,6 +215,10 @@
 .tw-text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+.tw-text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 .tw-font-bold {
   font-weight: 700;
@@ -414,12 +424,20 @@ main {
 .timer-div {
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
+  display: none;
 }
 .timer-div h1 {
   font-size: 50px;
   font-weight: 700;
   font-style: oblique;
   font-family: "Courier New", Courier, monospace;
+}
+
+@media screen and (max-width:590px) {
+  .timer-div h1{
+    font-size: 30px;
+  }
 }
 .timer-div p {
   font-style: oblique;
@@ -464,6 +482,10 @@ main {
   }
   .lg\:tw-bg-fixed {
     background-attachment: fixed;
+  }
+  .lg\:tw-text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
   .lg\:tw-text-lg {
     font-size: 1.125rem;

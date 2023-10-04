@@ -18,7 +18,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from .models import Token
+from .models import Token, UnbanActive
 from .permissions import StaffOnly
 from .serializers import CommentSerializer, InvoiceSerializer, PostSerializer
 
@@ -232,4 +232,14 @@ def send_custom_mail(request,id):
         return Response(status=200,data="email sent successfully")
     except Exception as e:
         return Response(status=404,data={'error':f"{e}"})
-    
+
+
+
+@api_view(['GET'])
+def get_time_left(request):
+    user = request.user
+    qs = UnbanActive.objects.filter(user = user)
+    if qs.exists() and qs.first().is_unbanned:
+        return Response({'username':user.username,'time_left':qs.first().time_left()})
+    else:
+        return Response(status = 404)

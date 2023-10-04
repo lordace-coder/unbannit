@@ -1,5 +1,5 @@
 from collections.abc import Iterable
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from core.mails import send_gmail
 from django.contrib.auth.models import User
@@ -50,12 +50,23 @@ class UnbanActive(models.Model):
     def __str__(self):
         return self.user.username
     
-    def save(self, force_insert: bool = ..., force_update: bool = ..., using: str | None = ..., update_fields: Iterable[str] | None = ...) -> None:
+    def save(self,*args, **kwargs) -> None:
         
         if not self.unban_time:
             self.unban_time = self.created_at + timedelta(days = 12)
-        return super().save(force_insert, force_update, using, update_fields)
+        return super().save(*args, **kwargs)
     
     @property
     def is_unbanned(self)->bool:
-        return (datetime.now() >= self.unban_time)
+        
+        return (datetime.now(tz=timezone.utc) >= self.unban_time.replace(tzinfo=timezone.utc))
+    
+   
+    def time_left(self)->timedelta:
+        if self.is_unbanned:return
+        unban_time = self.unban_time.replace(tzinfo=timezone.utc)
+        result =  (datetime.now(timezone.utc)-unban_time)
+        
+        return abs(result.total_seconds())
+    
+    

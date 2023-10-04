@@ -351,9 +351,13 @@
 
 
   {% comment %} !timer.js {% endcomment %}
-  
+   
 function startCountdown(days, hours, minutes, seconds) {
+  // show container
+  document.querySelector('.timer-div').style.display = 'block'
   // Calculate the total time in milliseconds
+ 
+  
   const totalMilliseconds =
     ((days * 24 + hours) * 60 + minutes) * 60 * 1000 + seconds * 1000;
 
@@ -390,7 +394,7 @@ function startCountdown(days, hours, minutes, seconds) {
     // Check if the countdown has reached zero
     if (timeRemaining <= 0) {
       clearInterval(interval); // Stop the countdown when it reaches zero
-      document.getElementById("timer").textContent = "Countdown expired";
+      document.querySelector(".timer-div").innerHTML = "<h1>Check your email for confirmation</h1><h1>Happy gaming</h1>";
     } else {
       timeRemaining -= 1000; // Decrease the time remaining by 1 second
     }
@@ -402,8 +406,12 @@ function startCountdown(days, hours, minutes, seconds) {
   // Initial update to display the timer immediately
   updateTimer();
 }
+  fetch('{% url "time-left" %}')
+  .then(e=>e.json())
+  .then(data=>{
+      startCountdown(0,0,0,4);
+  })
 
-  startCountdown(2, 3, 45, 30);
   {% comment %} ! end timer.js {% endcomment %}
 </script>
 {% endblock scripts %}

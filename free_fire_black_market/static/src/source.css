@@ -84,12 +84,20 @@ main {
 .timer-div {
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
+  display: none;
 }
 .timer-div h1 {
   font-size: 50px;
   font-weight: 700;
   font-style: oblique;
   font-family: "Courier New", Courier, monospace;
+}
+
+@media screen and (max-width:590px) {
+  .timer-div h1{
+    font-size: 30px;
+  }
 }
 .timer-div p {
   font-style: oblique;
