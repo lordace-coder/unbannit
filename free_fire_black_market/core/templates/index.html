@@ -267,7 +267,7 @@
       </section>
 {% include 'src/features.html' %}
   
-
+{% include "src/countdown.html" %}
 </main>
 <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -347,6 +347,64 @@
     var myModal = new bootstrap.Modal(document.getElementById(modal+'_modal'), {})
     myModal.show()
   }
+
+
+
+  {% comment %} !timer.js {% endcomment %}
+  
+function startCountdown(days, hours, minutes, seconds) {
+  // Calculate the total time in milliseconds
+  const totalMilliseconds =
+    ((days * 24 + hours) * 60 + minutes) * 60 * 1000 + seconds * 1000;
+
+  let timeRemaining = totalMilliseconds;
+
+  function updateTimer() {
+    // Calculate days, hours, minutes, and seconds
+    const daysRemaining = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+    const hoursRemaining = Math.floor(
+      (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutesRemaining = Math.floor(
+      (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+    );
+    const secondsRemaining = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+    // Format the time as "days:hours:minutes:seconds"
+    const formattedTime = `${daysRemaining}:${hoursRemaining}:${minutesRemaining}:${secondsRemaining}`;
+
+    // generate progress bar in terms of 12 days
+    const serverStart = 12 * 24 * 60 * 60 * 1000;
+
+    // Calculate the progress percentage
+
+    const progressPercentage =
+      ((serverStart - timeRemaining) / serverStart) * 100;
+
+    // Update the progress bar width
+    document.getElementById("progress").style.width = progressPercentage + "%";
+
+    // Display the formatted time in the timer div
+    document.getElementById("timer").textContent = formattedTime;
+    
+    // Check if the countdown has reached zero
+    if (timeRemaining <= 0) {
+      clearInterval(interval); // Stop the countdown when it reaches zero
+      document.getElementById("timer").textContent = "Countdown expired";
+    } else {
+      timeRemaining -= 1000; // Decrease the time remaining by 1 second
+    }
+  }
+
+  // Call the updateTimer function every second
+  const interval = setInterval(updateTimer, 1000);
+
+  // Initial update to display the timer immediately
+  updateTimer();
+}
+
+  startCountdown(2, 3, 45, 30);
+  {% comment %} ! end timer.js {% endcomment %}
 </script>
 {% endblock scripts %}
 <!-- ========== End Scripts ========== -->

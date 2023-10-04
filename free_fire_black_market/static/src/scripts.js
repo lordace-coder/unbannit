@@ -72,3 +72,5 @@ liElements.forEach(function (liElement) {
 function getPage(path) {
   window.location.href = path;
 }
+
+

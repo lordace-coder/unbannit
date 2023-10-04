@@ -1,16 +1,16 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-main{
-  padding-top: 10rem
+main {
+  padding-top: 10rem;
 }
 .flex-centered {
   @apply tw-flex tw-justify-center tw-align-middle;
 }
-.nav-bg{
-  background-color:#0e1d34 ;
+.nav-bg {
+  background-color: #0e1d34;
 }
 
-.post-title{
+.post-title {
   font-weight: 600;
   font-size: 26px;
   color: #001973;
@@ -19,10 +19,9 @@ main{
   font-weight: 700;
   text-transform: uppercase;
   color: #001973;
-
 }
 
-.section_span_txt{
+.section_span_txt {
   position: absolute;
   top: 46px;
   color: rgba(14, 29, 52, 0.06);
@@ -34,15 +33,15 @@ main{
   text-transform: uppercase;
   line-height: 0;
 }
-.confirm_btn{
+.confirm_btn {
   @apply tw-text-white tw-bg-blue-700 hover:tw-text-blue-700 hover:tw-bg-white hover:tw-border-blue-700;
 }
-.denied_btn{
+.denied_btn {
   @apply tw-text-white tw-bg-slate-700 hover:tw-text-slate-700 hover:tw-bg-white hover:tw-border-slate-700;
 }
 
-.article_font{
-  font-family: 'Inconsolata', monospace;
+.article_font {
+  font-family: "Inconsolata", monospace;
 }
 
 .background-clip {
@@ -66,20 +65,33 @@ main{
   }
 }
 
-.login_btn{
+.login_btn {
   border: 1px solid #fff;
   background-color: transparent !important;
 }
 
-.topic{
-  @apply tw-mb-14 tw-px-3
+.topic {
+  @apply tw-mb-14 tw-px-3;
 }
 
-.topic h3{
+.topic h3 {
   margin-bottom: 34px;
 }
-.blacklist li{
-  margin: .8rem 0;
+.blacklist li {
+  margin: 0.8rem 0;
 }
 
-/* gradient */
+.timer-div {
+  background-position: center;
+  background-size: contain;
+}
+.timer-div h1 {
+  font-size: 50px;
+  font-weight: 700;
+  font-style: oblique;
+  font-family: "Courier New", Courier, monospace;
+}
+.timer-div p {
+  font-style: oblique;
+  font-weight: bold;
+}

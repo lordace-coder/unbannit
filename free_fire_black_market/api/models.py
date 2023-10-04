@@ -1,4 +1,8 @@
+from collections.abc import Iterable
+from datetime import datetime, timedelta
+
 from core.mails import send_gmail
+from django.contrib.auth.models import User
 from django.db import models
 
 from .token_generator import generate_token
@@ -37,3 +41,21 @@ class Token(models.Model):
             
         except Exception as e:
             return e
+
+class UnbanActive(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_created=True)
+    unban_time = models.DateTimeField(null = True,blank = True)
+    
+    def __str__(self):
+        return self.user.username
+    
+    def save(self, force_insert: bool = ..., force_update: bool = ..., using: str | None = ..., update_fields: Iterable[str] | None = ...) -> None:
+        
+        if not self.unban_time:
+            self.unban_time = self.created_at + timedelta(days = 12)
+        return super().save(force_insert, force_update, using, update_fields)
+    
+    @property
+    def is_unbanned(self)->bool:
+        return (datetime.now() >= self.unban_time)
