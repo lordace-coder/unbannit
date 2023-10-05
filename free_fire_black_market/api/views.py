@@ -239,7 +239,7 @@ def send_custom_mail(request,id):
 def get_time_left(request):
     user = request.user
     qs = UnbanActive.objects.filter(user = user)
-    if qs.exists() and qs.first().is_unbanned:
-        return Response({'username':user.username,'time_left':qs.first().time_left()})
+    if qs.exists() and  not qs.first().is_unbanned:
+        return Response({'username':user.username,'time':qs.first().time_left()})
     else:
         return Response(status = 404)

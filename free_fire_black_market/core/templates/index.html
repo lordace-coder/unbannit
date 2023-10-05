@@ -375,7 +375,7 @@ function startCountdown(days, hours, minutes, seconds) {
     const secondsRemaining = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
     // Format the time as "days:hours:minutes:seconds"
-    const formattedTime = `${daysRemaining}:${hoursRemaining}:${minutesRemaining}:${secondsRemaining}`;
+    const formattedTime = `${daysRemaining}days :${hoursRemaining}hours :${minutesRemaining}mins :${secondsRemaining}secs`;
 
     // generate progress bar in terms of 12 days
     const serverStart = 12 * 24 * 60 * 60 * 1000;
@@ -394,7 +394,7 @@ function startCountdown(days, hours, minutes, seconds) {
     // Check if the countdown has reached zero
     if (timeRemaining <= 0) {
       clearInterval(interval); // Stop the countdown when it reaches zero
-      document.querySelector(".timer-div").innerHTML = "<h1>Check your email for confirmation</h1><h1>Happy gaming</h1>";
+      document.querySelector(".timer-div").innerHTML = "<h3>Check your email for confirmation</h3><h3>Happy gaming</h3>";
     } else {
       timeRemaining -= 1000; // Decrease the time remaining by 1 second
     }
@@ -409,7 +409,8 @@ function startCountdown(days, hours, minutes, seconds) {
   fetch('{% url "time-left" %}')
   .then(e=>e.json())
   .then(data=>{
-      startCountdown(0,0,0,4);
+    console.log(data.time)
+      startCountdown(0,0,0,data.time);
   })
 
   {% comment %} ! end timer.js {% endcomment %}
