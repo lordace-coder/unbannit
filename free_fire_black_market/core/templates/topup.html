@@ -36,7 +36,20 @@ white-space: nowrap;
 color: #666;
 }
 </style>
-<main class="bg-light ">
+<main class="bg-light">
+
+  <div class="container mx-auto" style="max-width:500px">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      Enter Your Game Id
+    </div>
+    
+    <div class="border-1 border border-opacity-25 border-black d-flex rounded-2 ps-2 mb-3 mt-5">
+      <input type="text" id="input-your-id" class="w-100 border-0 bg-transparent !tw-outline-0 !tw-outline-none" placeholder="enter a valid player id.." onchange="checkUserId()" >
+  
+      
+    </div> 
+  </div>
     <div class="m-5">
         <h3 class="section_header_txt text-center">Our Offers</h3>
             <div class="col-lg-6 col-md-8 container mx-auto iconslist ">
@@ -70,6 +83,36 @@ color: #666;
   const handle_gem_purchase = item_id=>{
     window.location.href = '{% url "topup" %}confirm/'+item_id
   }
+  const buttons = document.querySelectorAll('.btn')
+  var btn = document.createElement('button')
+  
+  function disableButtons(){
+    buttons.forEach(element => {
+      element.disabled = true;
+    });
+  }
+  function enableButtons(){
+    buttons.forEach(element => {
+      element.disabled = false;
+    });
+  }
+  var alertList = document.querySelectorAll('.alert');
+      alertList.forEach(function (alert) {
+        new bootstrap.Alert(alert)
+      })
+
+      //  check if user has entered his ingame id
+      var id = document.getElementById('input-your-id')
+      const checkUserId = ()=>{
+        
+        if(id.value.length <= 7){
+           disableButtons()
+        }else{
+            enableButtons()
+        }
+        
+      }
+      checkUserId();
 </script>
 
 {% comment %} your scripts here {% endcomment %}
