@@ -194,9 +194,9 @@ class MembershipToken(models.Model):
     
     def save(self, *args, **kwargs) -> None:
         if not self.created_at:
-            self.created_at = datetime.now()
+            self.created_at = timezone.now()
         if not self.expiry_date:
-            self.expiry_date = self.created_at + timedelta(hours=24)
+            self.expiry_date = self.created_at + timezone.timedelta(hours=24)
         return super().save(*args, **kwargs)
     
     @property
