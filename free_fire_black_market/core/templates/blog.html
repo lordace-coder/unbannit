@@ -14,6 +14,7 @@
       
       <!--Some posts-->
       <section class='features'>
+        {% include "src/countdown.html" %}
         <div class="section-header" data-aos="fade-in">
             <span>FreeFire leaks</span>
             <h2>FreeFire leaks</h2>
@@ -83,5 +84,71 @@
 <!-- ========== Start Scripts ========== -->
 {% block scripts %}
 {% include 'src/scripts.html' %}
+<script>
+    {% comment %} !timer.js {% endcomment %}
+   
+function startCountdown(days, hours, minutes, seconds) {
+  // show container
+  document.querySelector('.timer-div').style.display = 'block'
+  // Calculate the total time in milliseconds
+ 
+  
+  const totalMilliseconds =
+    ((days * 24 + hours) * 60 + minutes) * 60 * 1000 + seconds * 1000;
+
+  let timeRemaining = totalMilliseconds;
+
+  function updateTimer() {
+    // Calculate days, hours, minutes, and seconds
+    const daysRemaining = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+    const hoursRemaining = Math.floor(
+      (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutesRemaining = Math.floor(
+      (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+    );
+    const secondsRemaining = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+    // Format the time as "days:hours:minutes:seconds"
+    const formattedTime = `${daysRemaining}days :${hoursRemaining}hours :${minutesRemaining}mins :${secondsRemaining}secs`;
+
+    // generate progress bar in terms of 12 days
+    const serverStart = 12 * 24 * 60 * 60 * 1000;
+
+    // Calculate the progress percentage
+
+    const progressPercentage =
+      ((serverStart - timeRemaining) / serverStart) * 100;
+
+    // Update the progress bar width
+    document.getElementById("progress").style.width = progressPercentage + "%";
+
+    // Display the formatted time in the timer div
+    document.getElementById("timer").textContent = formattedTime;
+    
+    // Check if the countdown has reached zero
+    if (timeRemaining <= 0) {
+      clearInterval(interval); // Stop the countdown when it reaches zero
+      document.querySelector(".timer-div").innerHTML = "<h3>Check your email for confirmation</h3><h3>Happy gaming</h3>";
+    } else {
+      timeRemaining -= 1000; // Decrease the time remaining by 1 second
+    }
+  }
+
+  // Call the updateTimer function every second
+  const interval = setInterval(updateTimer, 1000);
+
+  // Initial update to display the timer immediately
+  updateTimer();
+}
+  fetch('{% url "time-left" %}')
+  .then(e=>e.json())
+  .then(data=>{
+    console.log(data.time)
+      startCountdown(0,0,0,data.time);
+  })
+
+  {% comment %} ! end timer.js {% endcomment %}
+</script>
 {% endblock scripts %}
 <!-- ========== End Scripts ========== -->
