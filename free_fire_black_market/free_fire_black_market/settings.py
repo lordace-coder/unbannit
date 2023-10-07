@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-h3(#j=&2o-@_!2l+&g*us^^df$lt@sn%z*&$vbmn2p1c9bg=$m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -136,8 +136,8 @@ EMAIL_USE_TLS = False
 EMAIL_TIMEOUT = 40
 
 # DJANGO PAY=PAL SETTINGS
-PAYPAL_RECIEVER_EMAIL = 'sb-47s93u27136421@business.example.com'
-PAYPAL_TEST = True
+PAYPAL_RECIEVER_EMAIL = 'freefireblackmarket@gmail.com'
+PAYPAL_TEST = False
 
 CORS_ALLOWED_ORIGINS = [
        'http://10.0.2.2:8000',
