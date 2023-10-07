@@ -1,2 +1,1 @@
-free_fire_black_market/*.sqlite3
-.INFO.txt
+free_fire_black_market/db.sqlite3
