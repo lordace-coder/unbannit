@@ -5,6 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %} {% endblock title %}</title>
+    <!--for google ads -->
+    <meta name="google-adsense-account" content="ca-pub-5445644747443503">
     <link href={% static "assets/vendor/bootstrap/css/bootstrap.min.css" %} rel="stylesheet">
 <link href={% static "assets/vendor/bootstrap-icons/bootstrap-icons.css" %} rel="stylesheet" media="screen">
 <link href={% static "assets/vendor/fontawesome-free/css/all.min.css" %} rel="stylesheet">
@@ -22,12 +24,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Averia+Sans+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
 
-   
+
   </head>
   <body >
     {% block body %}{% endblock body %}
     <footer id="footer" class="footer">
-  
+
       <div class="container">
         <div class="row gy-4">
           <div class="col-lg-5 col-md-12 footer-info">
@@ -42,7 +44,7 @@
 
             </div> {% endcomment %}
           </div>
-  
+
           <div class="col-lg-2 col-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
@@ -52,7 +54,7 @@
               <li><a href="{% url 'contact' %}">Contact</a></li>
             </ul>
           </div>
-  
+
           <div class="col-lg-2 col-6 footer-links">
             <h4>Our Services</h4>
             <ul>
@@ -62,22 +64,22 @@
 
             </ul>
           </div>
-  
 
-  
+
+
         </div>
       </div>
-  
+
       <div class="container mt-4">
         <div class="copyright">
           &copy; Copyright <strong><span>Unbannit</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-   
+
           Designed by <a href="https://lordacemedia.netlify.app">AceMedia</a>
         </div>
       </div>
-  
+
     </footer>
     {% block scripts %}{% endblock scripts %}
   </body>
