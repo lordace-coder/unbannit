@@ -5,7 +5,7 @@ from paypal.standard.forms import PayPalPaymentsForm, format_html
 
 class CustomPaypalButton(PayPalPaymentsForm):
     def get_html_submit_element(self):
-        return """<button type="submit" class="btn btn-primary">Purchase</button>"""
+        return """<button type="submit" class="btn btn-primary">Pay with PayPal</button>"""
     
     def render_form(self,*args, **kwargs):
         form_open  = u'''<form action="%s" method="post">''' % (self.get_login_url())

@@ -28,6 +28,9 @@ urlpatterns = [
     path('token/verify/',TokenVerifyView.as_view(),name='verify-token'),
     
     # * HELPER VIEWS
-    path('send-custom-mail/<int:id>',views.send_custom_mail,name='send-mail')
+    path('send-custom-mail/<int:id>',views.send_custom_mail,name='send-mail'),
+    
+    # * HANDLE PAYMENT FROM PAYPAL CHECKOUT
+    path('payment-paying/',views.handle_users_payment,name="users-payment"),
 ]
 

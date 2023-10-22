@@ -3,7 +3,7 @@ from functools import reduce
 from itertools import accumulate
 
 from core.exceptions import UserSubscriptionError
-from core.mails import send_gmail
+from core.mails import send_gmail, send_unban_mail
 from core.models import Comments, Invoice, MembershipToken, Post, Subscription
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -237,9 +237,28 @@ def send_custom_mail(request,id):
 
 @api_view(['GET'])
 def get_time_left(request):
+    if not request.user.is_authenticated:
+        return Response()
     user = request.user
     qs = UnbanActive.objects.filter(user = user)
-    if qs.exists() and  not qs.first().is_unbanned:
+    if qs.exists() and not qs.first().is_unbanned:
         return Response({'username':user.username,'time':qs.first().time_left()})
     else:
         return Response(status = 404)
+
+
+
+@api_view(['GET'])
+def handle_users_payment(request,invoice_id,email=None):
+    try:
+        invoice:Invoice = Invoice.objects.get(invoice_id)
+        if 'unban' in invoice.item_name:
+                qs = UnbanActive.objects.filter(user = invoice.user)
+                if not qs.exists():
+                    unban_service = UnbanActive.objects.create(user = invoice.user)
+                    unban_service.save()
+                send_unban_mail(invoice.user.email)
+        invoice.paid = True
+        return Response(status = 200)
+    except Exception as e:
+        return Response(status = 400,data={'error':f"{e}"})

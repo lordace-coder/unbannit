@@ -17,6 +17,7 @@ urlpatterns = [
     path('tutorials/',views.TutorialPageView.as_view(),name='tutorials'),
     path('tutorials/<str:selected_tab>',views.TutorialPageView.as_view()),
     path('receipt/<slug:invoice_id>',views.get_invoice,name='invoice'),
+    path('receipt/',views.get_invoice,name='invoice'),
     path('pricings/',views.PricingView.as_view(),name='pricing'),
     path('<slug:slug>',views.PostDetailView.as_view(),name="post"),
     path('blog/',views.BlogListView.as_view(),name="blog"),

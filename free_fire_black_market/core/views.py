@@ -125,6 +125,7 @@ class HandleUnbanView(LoginRequiredMixin,TemplateView):
             context['subscription_active'] = Subscription.objects.get(user=self.request.user).active
         except:
             context['subscription_active'] = False
+        context['price'] = item.amount
         return context
 
 
@@ -342,7 +343,8 @@ def confirm_payment(request:HttpRequest,item_id):
     item = Store.objects.get(item_id = item_id)
     invoice_id = Invoice.generate_uuid()
     purchase_btn = generate_form_btn(item.amount,request.user,item.item_name,invoice_id,request.get_host())
-    Invoice.objects.create(amount =item.amount ,item_id = invoice_id,item_name=item.item_name,currency_code = 'USD',user= request.user).save()
+    new_invoice = Invoice.objects.create(amount =item.amount ,item_id = invoice_id,item_name=item.item_name,currency_code = 'USD',user= request.user)
+    new_invoice.save()
 
     context = {
         'purchase_btn':purchase_btn,
@@ -353,4 +355,7 @@ def confirm_payment(request:HttpRequest,item_id):
     except:
         context['subscription_active'] = False
     finally:
+        context['price'] = item.amount
+        context['invoice'] = new_invoice
+        
         return render(request,'purchases/confirm.html',context)
