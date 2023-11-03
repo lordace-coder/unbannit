@@ -5,10 +5,6 @@ from django.utils.html import strip_tags
 
 
 def send_gmail(title,message,reciever):
-  # send_mail(title,
-  #           message,
-  #         'freefireblackmarket@gmail.com',[reciever],
-  #           fail_silently=False)
   html_message = render_to_string('mails/forgot_password/index.html',{'message':message})
   plain_msg = strip_tags(html_message)
   message = EmailMultiAlternatives(
@@ -18,7 +14,7 @@ def send_gmail(title,message,reciever):
     to=[reciever]
   )
   message.attach_alternative(html_message,'text/html')
-  message.send()
+  message.send(fail_silently=True)
 
 
 
@@ -33,7 +29,7 @@ def send_unban_mail (email):
     to=[email]
   )
   message.attach_alternative(html_message,'text/html')
-  message.send()
+  message.send(fail_silently=True)
 
 
 def welcome_new_user(user):
@@ -46,4 +42,4 @@ def welcome_new_user(user):
     to=[user.email]
   )
   message.attach_alternative(html_message,'text/html')
-  message.send()
+  message.send(fail_silently=True)

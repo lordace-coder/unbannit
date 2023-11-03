@@ -28,7 +28,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'paypal.standard.ipn',
     'corsheaders',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'geoip2'
+  
+  
 ]
 
 MIDDLEWARE = [
@@ -40,9 +43,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+  
 ]
-
+GEOIP_PATH = os.path.join(BASE_DIR,  'geo_ip.mmdb')
 ROOT_URLCONF = 'free_fire_black_market.urls'
+
 
 TEMPLATES = [
     {
@@ -161,3 +166,6 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME":timedelta(days=1),
     'user_id_field':'username'
 }
+
+# GEO LOCATION CACHE
+

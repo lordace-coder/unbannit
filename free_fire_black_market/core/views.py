@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.contrib.gis.geoip2 import GeoIP2
 from django.db import models
 from django.db.models.query import QuerySet
 from django.http import Http404, HttpRequest, HttpResponse
@@ -33,7 +34,17 @@ class HomeView(ListView):
     context_object_name = "post"
     
     def get_queryset(self) -> QuerySet[Any]:
+        request = self.request
         qs =  super().get_queryset()[0:3]
+        
+        g = GeoIP2(path=settings.GEOIP_PATH)
+        remote_addr = request.META.get('HTTP_X_FORWARDED_FOR')
+        if remote_addr:
+            address = remote_addr.split(',')[-1].strip()
+        else:
+            address = request.META.get('REMOTE_ADDR')
+        country = g.country_code(address)
+        print(country)
         return qs
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:

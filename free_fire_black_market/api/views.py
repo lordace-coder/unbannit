@@ -28,6 +28,7 @@ class CreateCommentApiView(ListCreateAPIView):
     serializer_class = CommentSerializer
     
     def get_queryset(self):
+       
         slug  = self.kwargs.get('slug')
         post = Post.objects.get(slug=slug)
         qs = super().get_queryset().filter(post = post)
