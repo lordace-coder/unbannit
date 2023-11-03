@@ -54,7 +54,7 @@ color: #666;
         <h3 class="section_header_txt text-center">Our Offers</h3>
             <div class="col-lg-6 col-md-8 container mx-auto iconslist ">
                 {% for item in data %}
-                <div class="icon shadow-sm">
+                <div class="icon shadow-sm" data-aos="flip-left" data-aos-delay={{ item.item_id}}*100>
                   <i class="ri-vip-diamond-fill"></i>
                   <p>{{ item.item_name }}</p>
                   <p><i class="fa fa-dollar-sign"></i> {{ item.amount }}</p>
@@ -64,6 +64,9 @@ color: #666;
                 </div>
               {% endfor %}
             </div>     
+    </div>
+    <div class="mb-5">
+      {% include "src/features.html" %}
     </div>
     
 </main>

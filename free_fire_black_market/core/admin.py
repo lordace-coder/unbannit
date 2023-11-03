@@ -7,7 +7,7 @@ from .models import (FAQ, Comments, Invoice, MembershipToken, Post, Store,
 # Register your models here.
 class PostAdmin(admin.ModelAdmin):
     list_display = ['id','title','created_at']
-    fields = ['title','created_at','post','slug']
+    fields = ['title','created_at','post','slug','image']
 
 
 admin.site.register(Post,PostAdmin)

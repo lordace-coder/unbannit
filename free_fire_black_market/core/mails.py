@@ -1,18 +1,49 @@
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives, send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 
 def send_gmail(title,message,reciever):
-  send_mail(title,
-            message,
-          'freefireblackmarket@gmail.com',[reciever],
-            fail_silently=False)
+  # send_mail(title,
+  #           message,
+  #         'freefireblackmarket@gmail.com',[reciever],
+  #           fail_silently=False)
+  html_message = render_to_string('mails/forgot_password/index.html',{'message':message})
+  plain_msg = strip_tags(html_message)
+  message = EmailMultiAlternatives(
+    subject=title,
+    body=plain_msg,
+    from_email='freefireblackmarket@gmail.com',
+    to=[reciever]
+  )
+  message.attach_alternative(html_message,'text/html')
+  message.send()
+
+
+
 
 def send_unban_mail (email):
-          send_gmail('unban account',"your unban request has been sent and will be confirmed within 12 days,any other use of hacks will result in a permanent ban",email)
+  html_message = render_to_string('mails/confirm_unban/index.html')
+  plain_msg = strip_tags(html_message)
+  message = EmailMultiAlternatives(
+    subject='Unban Confirmation',
+    body=plain_msg,
+    from_email='freefireblackmarket@gmail.com',
+    to=[email]
+  )
+  message.attach_alternative(html_message,'text/html')
+  message.send()
 
 
 def welcome_new_user(user):
-  send_gmail(title="welcome user {}".format(user.username),
-             message="Thank you for creating an account with us.",
-             reciever=user.email)
+  html_message = render_to_string('mails/welcome/index.html')
+  plain_msg = strip_tags(html_message)
+  message = EmailMultiAlternatives(
+    subject=f'Welcome {user.username}',
+    body=plain_msg,
+    from_email='freefireblackmarket@gmail.com',
+    to=[user.email]
+  )
+  message.attach_alternative(html_message,'text/html')
+  message.send()

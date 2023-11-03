@@ -29,7 +29,7 @@ def not_found(request,exception):
 
 class HomeView(ListView):
     template_name = "index.html"
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().order_by('-created_at')
     context_object_name = "post"
     
     def get_queryset(self) -> QuerySet[Any]:
@@ -334,6 +334,12 @@ class TopUpView(ListView):
     template_name = 'topup.html'
     queryset = Store.objects.filter(item_name__icontains = 'gems')
     context_object_name = 'data'
+    
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['faq'] = FAQ.objects.all()
+        return context
     
     
 
