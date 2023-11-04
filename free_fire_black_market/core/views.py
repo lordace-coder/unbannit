@@ -16,6 +16,7 @@ from django.urls import reverse
 from django.views import View
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.base import TemplateResponseMixin
+from helpers.geo_locate import get_ip_from_request
 from helpers.math import get_discount, reduce_by
 
 from .forms import CustomPaypalButton, generate_form_btn
@@ -36,15 +37,6 @@ class HomeView(ListView):
     def get_queryset(self) -> QuerySet[Any]:
         request = self.request
         qs =  super().get_queryset()[0:3]
-        
-        g = GeoIP2(path=settings.GEOIP_PATH)
-        remote_addr = request.META.get('HTTP_X_FORWARDED_FOR')
-        if remote_addr:
-            address = remote_addr.split(',')[-1].strip()
-        else:
-            address = request.META.get('REMOTE_ADDR')
-        country = g.country_code(address)
-        print(country)
         return qs
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
@@ -345,6 +337,19 @@ class TopUpView(ListView):
     template_name = 'topup.html'
     queryset = Store.objects.filter(item_name__icontains = 'gems')
     context_object_name = 'data'
+    country = None
+    
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        #  todo check user country here
+        ip_address = get_ip_from_request(request)
+        geo_instance = GeoIP2()
+        self.country = geo_instance.country_name(ip_address)
+        # todo if nigerian set url data to ng
+        
+        
+        if self.country == 'Nigeria'.lower() and not kwargs.get('country'):
+            return redirect('local-topup','NG')
+        return super().get(request, *args, **kwargs)
     
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
@@ -355,11 +360,12 @@ class TopUpView(ListView):
     
 
 @login_required
-def confirm_payment(request:HttpRequest,item_id):
+def confirm_payment(request:HttpRequest,item_id,country=None):
     # get purchase item and generate an invoice forthe item with paid set to false render the final purchase button to the template
+    # todo check if user is from nigeri then set payment in his currency and reciept
     item = Store.objects.get(item_id = item_id)
     invoice_id = Invoice.generate_uuid()
-    purchase_btn = generate_form_btn(item.amount,request.user,item.item_name,invoice_id,request.get_host())
+    purchase_btn = generate_form_btn(item.amount,request.user,item.item_name,invoice_id,request.get_host(),)
     new_invoice = Invoice.objects.create(amount =item.amount ,item_id = invoice_id,item_name=item.item_name,currency_code = 'USD',user= request.user)
     new_invoice.save()
 
@@ -374,5 +380,5 @@ def confirm_payment(request:HttpRequest,item_id):
     finally:
         context['price'] = item.amount
         context['invoice'] = new_invoice
-        
+        context['country'] = country
         return render(request,'purchases/confirm.html',context)

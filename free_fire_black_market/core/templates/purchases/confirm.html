@@ -48,17 +48,17 @@
         <!-- !  ERROR CONTAINER -->
       <div id="error-cont" class="alert alert-danger alert-dismissible fade show" role="alert">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        <p>hey</p>
+        <p></p>
       </div>
       
       <!-- ! SUCCESS CONTAINER -->
       <div id="success-cont" class="alert alert-primary alert-dismissible fade show" role="alert">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        <p>hey</p>
+        <p></p>
       </div>
  
       </div>
-        <div class="d-grid col-md-8 col-lg-4 mx-auto ">
+        <div class="d-grid col-md-8 col-lg-4 mx-auto " data-aos="flip-up">
             <div class="section_header_txt mb-2 text-center" style="font-size: 19px;">Complete Purchase</div>
                 <div class="icon border border-primary" >
                   {% if 'gems' in item.item_name %}
@@ -71,9 +71,15 @@
                 <i class="fa fa-add"></i>
             </span>
             <p>Item:{{ item.item_name }}</p>
+            
+            {% if country  and country == 'NG' %}
+            <p> &#x20A6;  {{ item.to_naira }}</p>
+            {% else %}
             <p><i class="fa fa-dollar-sign"></i> {{ item.amount }}</p>
+            {% endif %}
+            
             <div class="label py-2 d-flex flex-column gap-2">
-            {{purchase_btn.render_form}}
+            {% comment 'no longer necesary ive added paypal frontend cdn' %} {{purchase_btn.render_form}} {% endcomment %}
           <div class="w-75 mx-auto pt-2"><div id="paypal-button-container" ></div></div>
             
             </div>

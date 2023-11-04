@@ -7,7 +7,11 @@ from . import views
 urlpatterns = [
     path('',views.HomeView.as_view(),name="index"),
     path('purchase-gems/',views.TopUpView.as_view(),name='topup'),
-    path('purchase-gems/confirm/<slug:item_id>',views.confirm_payment,name='topup'),
+    path('purchase-gems/confirm/<slug:item_id>',views.confirm_payment),
+    # * localization features
+    path('purchase-gems/<str:country>',views.TopUpView.as_view(),name='local-topup'),
+    
+        path('purchase-gems/<str:country>/confirm/<slug:item_id>',views.confirm_payment,name='handle-local-topup'),
     path('unban_acct/',views.UnbanAcctView.as_view(),name='purchase_acct'),
     path('unban_acct/handle_unban',views.HandleUnbanView.as_view(),name='handle-unban'),
     path('contact/',views.ContactPageView.as_view(),name='contact'),

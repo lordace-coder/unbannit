@@ -99,7 +99,8 @@ class Store(models.Model):
     def __str__(self):
         return self.item_name
     
-    
+    def to_naira(self):
+        return int(self.amount) * 606.77
     
     
     @staticmethod

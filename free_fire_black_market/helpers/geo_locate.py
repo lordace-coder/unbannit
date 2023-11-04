@@ -1,5 +1,4 @@
 from django.http import HttpRequest
-from django_geoip.models import IpRange
 
 
 def get_ip_from_request(request:HttpRequest):
@@ -20,10 +19,5 @@ def get_ip_from_request(request:HttpRequest):
 
 
 
-def get_users_country(ip):
-    try:
-        geoip_record = IpRange.objects.by_ip(ip)
-        print(geoip_record.country)
-    except IpRange.DoesNotExist:
-        print('Unknown location')
+
     

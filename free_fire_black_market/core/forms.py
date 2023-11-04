@@ -15,14 +15,14 @@ class CustomPaypalButton(PayPalPaymentsForm):
         return format_html(form_open+self.as_table()+submit_elm+form_close)
 
 
-def generate_form_btn(amount,user,item_name,invoice,host)-> CustomPaypalButton:
+def generate_form_btn(amount,user,item_name,invoice,host,currency='USD')-> CustomPaypalButton:
         paypal_dict = {
             'business':settings.PAYPAL_RECIEVER_EMAIL,
             'amount':amount,
             'user':user,
             'item_name':item_name,
             'invoice':invoice,
-            'currency_code':'USD',
+            'currency_code':currency,
             'notify_url':'http://{}{}'.format(host,reverse('paypal-ipn')),
             'cancel_url':'http://{}{}'.format(host,reverse('purchase_failed')),
             'return_url':'http://{}{}'.format(host,reverse('purchase_success',kwargs={'invoice_id':invoice})),

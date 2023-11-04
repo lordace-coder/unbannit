@@ -1,6 +1,6 @@
 {% extends 'src/generic_page_block.html' %}
 {% load static %} 
-{% block title%}Forgot password {% endblock title %}
+{% block title%}Toup Today {% endblock title %}
 
 
 
@@ -52,18 +52,36 @@ color: #666;
   </div>
     <div class="m-5">
         <h3 class="section_header_txt text-center">Our Offers</h3>
+        {% if view.kwargs.country == 'NG' %}
             <div class="col-lg-6 col-md-8 container mx-auto iconslist ">
+              
                 {% for item in data %}
                 <div class="icon shadow-sm" data-aos="flip-left" data-aos-delay={{ item.item_id}}*100>
                   <i class="ri-vip-diamond-fill"></i>
                   <p>{{ item.item_name }}</p>
-                  <p><i class="fa fa-dollar-sign"></i> {{ item.amount }}</p>
+                  <p> &#x20A6; {{ item.to_naira  }}</p>
                   <div class="label">
                     <button class="btn btn-primary" onclick="handle_gem_purchase('{{item.item_id}}')">Purchase</button>
                   </div>
                 </div>
               {% endfor %}
-            </div>     
+            </div>           
+        {% else %}
+        <div class="col-lg-6 col-md-8 container mx-auto iconslist ">
+              
+          {% for item in data %}
+          <div class="icon shadow-sm" data-aos="flip-left" data-aos-delay={{ item.item_id}}*100>
+            <i class="ri-vip-diamond-fill"></i>
+            <p>{{ item.item_name }}</p>
+            <p><i class="fa fa-dollar-sign"></i> {{ item.amount  }}</p>
+            <div class="label">
+              <button class="btn btn-primary" onclick="handle_gem_purchase('{{item.item_id}}')">Purchase</button>
+            </div>
+          </div>
+        {% endfor %}
+      </div> 
+        {% endif %}
+  
     </div>
     <div class="mb-5">
       {% include "src/features.html" %}
@@ -82,10 +100,18 @@ color: #666;
 <script src={% static "assets/vendor/swiper/swiper-bundle.min.js" %}></script>
 <script src={% static "assets/vendor/aos/aos.js" %}></script>
 
-<script>  
+<script> 
+  {% if view.kwargs.country  %}
+    const handle_gem_purchase = item_id=>{
+    window.location.href = '{% url "topup" %}{{view.kwargs.country}}/confirm/'+item_id
+  }
+
+  {% else %}
   const handle_gem_purchase = item_id=>{
     window.location.href = '{% url "topup" %}confirm/'+item_id
   }
+  {% endif %}
+
   const buttons = document.querySelectorAll('.btn')
   var btn = document.createElement('button')
   
