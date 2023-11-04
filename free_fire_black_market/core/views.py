@@ -345,7 +345,7 @@ class TopUpView(ListView):
         geo_instance = GeoIP2()
         self.country = geo_instance.country_name(ip_address)
         # todo if nigerian set url data to ng
-        
+        print('country ',self.country)
         
         if self.country == 'Nigeria'.lower() and not kwargs.get('country'):
             return redirect('local-topup','NG')
