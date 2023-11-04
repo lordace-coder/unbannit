@@ -10,8 +10,9 @@ urlpatterns = [
     path('purchase-gems/confirm/<slug:item_id>',views.confirm_payment),
     # * localization features
     path('purchase-gems/<str:country>',views.TopUpView.as_view(),name='local-topup'),
-    
         path('purchase-gems/<str:country>/confirm/<slug:item_id>',views.confirm_payment,name='handle-local-topup'),
+        
+        
     path('unban_acct/',views.UnbanAcctView.as_view(),name='purchase_acct'),
     path('unban_acct/handle_unban',views.HandleUnbanView.as_view(),name='handle-unban'),
     path('contact/',views.ContactPageView.as_view(),name='contact'),
@@ -23,6 +24,9 @@ urlpatterns = [
     path('receipt/<slug:invoice_id>',views.get_invoice,name='invoice'),
     path('receipt/',views.get_invoice,name='invoice'),
     path('pricings/',views.PricingView.as_view(),name='pricing'),
+    # * PRICING LOCALIZATION
+    path('pricings/<str:country>',views.PricingView.as_view(),name='local-pricing'),
+    
     path('<slug:slug>',views.PostDetailView.as_view(),name="post"),
     path('blog/',views.BlogListView.as_view(),name="blog"),
     path('auth/',views.AuthenticateView.as_view(),name='auth'),

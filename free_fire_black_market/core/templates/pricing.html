@@ -42,7 +42,13 @@
         <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
           <div class="pricing-item">
             <h3>Free Plan</h3>
+            {% if view.kwargs.country and view.kwargs.country == 'NG' %}
+            <h4><sup>&#x20A6;</sup>0<span> / month</span></h4>
+
+            {% else %}
             <h4><sup>$</sup>0<span> / month</span></h4>
+
+            {% endif %}
             <ul>
               <li><i class="bi bi-check"></i> Access to FreeFire leaks and tricks.</li>
               <li><i class="bi bi-check"></i> CustomerCare reply within 12hrs.</li>
@@ -56,8 +62,13 @@
         <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
           <div class="pricing-item featured">
             <h3>Gamer Plan</h3>
-            <h4><sup>$</sup>{{subscribtions.0.amount}}<span> / month</span></h4>
-            <ul>
+            {% if view.kwargs.country and view.kwargs.country == 'NG' %}
+            <h4 style='font-size:24px'><sup style="font-size:16px">&#x20A6;</sup>{{subscribtions.0.to_naira}}<span> / 3months</span></h4>
+
+        {% else %}
+            <h4><sup>$</sup>{{subscribtions.0.amount}}<span> / 3months</span></h4>
+
+        {% endif %}            <ul>
               <li><i class="bi bi-check"></i> CustomerCare reply within 4hrs.</li>
               <li><i class="bi bi-check"></i> 20% Discount for account recovery services.</li>
               <li><i class="bi bi-check"></i> No cooldown time for account recovery services.</li>
@@ -76,7 +87,13 @@
         <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
           <div class="pricing-item">
             <h3>Hackers Plan</h3>
-            <h4><sup>$</sup>{{subscribtions.1.amount}}<span> / 3months</span></h4>
+            {% if view.kwargs.country and view.kwargs.country == 'NG' %}
+                <h4 style='font-size:24px'><sup style="font-size:16px">&#x20A6;</sup>{{subscribtions.1.to_naira}}<span> / 3months</span></h4>
+
+            {% else %}
+                <h4><sup>$</sup>{{subscribtions.1.amount}}<span> / 3months</span></h4>
+
+            {% endif %}
             <ul>
               <li><i class="bi bi-check"></i> CustomerCare reply within 1hr.</li>
               <li><i class="bi bi-check"></i> 20% Discount in account recovery services.</li>

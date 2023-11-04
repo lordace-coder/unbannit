@@ -175,6 +175,7 @@ class BlogListView(ListView):
 
 class PricingView(TemplateView):
     template_name = "pricing.html"
+    country = None
     
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context =  super().get_context_data(**kwargs)
@@ -200,6 +201,19 @@ class PricingView(TemplateView):
         # append form buttons to context data 
         context.update({'game_plan_btn':game_plan_purchase,'hackers_plan_btn':hacker_plan_purchase})
         return context
+    
+    
+    # * CHECK USERS LOCATION INSIDE THE GET REQUEST TO GIVE THEM THIER PRICE IN LOCAL CURRENCY
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        #  todo check user country here
+        # ip_address = get_ip_from_request(request)
+        # geo_instance = GeoIP2()
+        # self.country = geo_instance.country_name(ip_address)
+        # todo if nigerian set url data to ng
+      
+        if self.country == 'Nigeria'.lower() and not kwargs.get('country'):
+            return redirect('local-pricing','NG')
+        return super().get(request, *args, **kwargs)
     
 
 
@@ -345,7 +359,7 @@ class TopUpView(ListView):
         geo_instance = GeoIP2()
         self.country = geo_instance.country_name(ip_address)
         # todo if nigerian set url data to ng
-        print('country ',self.country)
+  
         
         if self.country == 'Nigeria'.lower() and not kwargs.get('country'):
             return redirect('local-topup','NG')
